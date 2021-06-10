@@ -1,0 +1,261 @@
+[
+    {
+        "id": "91694a3b.755b08",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "47d2037f.1633bc",
+        "type": "csv",
+        "z": "91694a3b.755b08",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 370,
+        "y": 80,
+        "wires": [
+            [
+                "4b4fadb3.5956a4",
+                "5bd069f6.bc6458"
+            ]
+        ]
+    },
+    {
+        "id": "3b89bcd7.5fd534",
+        "type": "file in",
+        "z": "91694a3b.755b08",
+        "name": "file",
+        "filename": "C:\\\\Users\\\\Andrea\\\\Desktop\\\\OneDrive - Politecnico di Milano\\\\Magistrale\\\\II Anno\\\\II Semestre\\\\Internet of Things\\\\Laboratory\\\\Challenges\\\\Challenge#02\\\\traffic.csv",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "x": 230,
+        "y": 80,
+        "wires": [
+            [
+                "47d2037f.1633bc"
+            ]
+        ]
+    },
+    {
+        "id": "a9db7da4.977b2",
+        "type": "inject",
+        "z": "91694a3b.755b08",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 90,
+        "y": 80,
+        "wires": [
+            [
+                "3b89bcd7.5fd534"
+            ]
+        ]
+    },
+    {
+        "id": "ad74ec6a.96866",
+        "type": "debug",
+        "z": "91694a3b.755b08",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "4b4fadb3.5956a4",
+        "type": "function",
+        "z": "91694a3b.755b08",
+        "name": "plc_filter",
+        "func": "var payloads = msg.payload;\nvar new_value;\nvar output = [];\nvar new_msg = [];\nvar topic = false;\n\nfor (const [key, value] of Object.entries(payloads)) {\n    if(value.includes(\"Publish Message\")){\n        if(value.includes(\"[factory/department1/section1/plc]\") ||\n         value.includes(\"[factory/department3/section3/plc]\")){\n            //output.push(value);\n            topic = true;\n        }\n    }\n}\n\nif(topic){\n    Object.entries(payloads).forEach(([key, value]) => output.push(value));\n}\n    \nif(topic){\n    new_value = output[output.length-1].split(\"]\");\n    new_value = new_value[new_value.length-1].split(\" \");\n    \n    if(new_value[new_value.length-1] != \"\"){\n        const buf = new Buffer(new_value[new_value.length-1], 'hex');\n        var obj = JSON.parse(buf.toString());\n        new_msg.push({\n             payload: \"field1=\"+obj.value+\"&status=MQTTPUBLISH\"\n        });\n        return new_msg;\n    }\n} \n\nreturn;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 200,
+        "wires": [
+            [
+                "b6e5dfe9.f103e"
+            ]
+        ]
+    },
+    {
+        "id": "b6e5dfe9.f103e",
+        "type": "delay",
+        "z": "91694a3b.755b08",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "60",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 440,
+        "y": 200,
+        "wires": [
+            [
+                "ad74ec6a.96866",
+                "eb231eca.0dd89"
+            ]
+        ]
+    },
+    {
+        "id": "5bd069f6.bc6458",
+        "type": "function",
+        "z": "91694a3b.755b08",
+        "name": "hydraulic_valve_filter",
+        "func": "var payloads = msg.payload;\nvar new_value;\nvar output = [];\nvar new_msg = [];\nvar topic = false;\n\nfor (const [key, value] of Object.entries(payloads)) {\n    if(value.includes(\"Publish Message\")){\n        if(value.includes(\"[factory/department1/section1/hydraulic_valve]\") || value.includes(\"[factory/department3/section3/hydraulic_valve]\")){\n            //output.push(value);\n            topic = true;\n        }\n    }\n}\n\nif(topic){\n    Object.entries(payloads).forEach(([key, value]) => output.push(value));\n}\n    \nif(topic){\n    /*\n    new_msg.push({\n             payload: output[output.length-1]\n        });\n        return new_msg;\n        */\n    new_value = output[output.length-1].split(\"]\");\n    new_value = new_value[new_value.length-1].split(\" \");\n    \n    if(new_value[new_value.length-1] != \"\"){\n        const buf = new Buffer(new_value[new_value.length-1], 'hex');\n        var obj = JSON.parse(buf.toString());\n        new_msg.push({\n             payload: \"field2=\"+obj.value+\"&status=MQTTPUBLISH\"\n        });\n        return new_msg;\n    }\n    return new_msg;\n} \n\nreturn;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 180,
+        "y": 240,
+        "wires": [
+            [
+                "d0d7c91c.159ed8"
+            ]
+        ]
+    },
+    {
+        "id": "74f92754.7b17b8",
+        "type": "delay",
+        "z": "91694a3b.755b08",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "60",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 440,
+        "y": 240,
+        "wires": [
+            [
+                "8ea2d27a.b6ce4",
+                "eb231eca.0dd89"
+            ]
+        ]
+    },
+    {
+        "id": "8ea2d27a.b6ce4",
+        "type": "debug",
+        "z": "91694a3b.755b08",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "d0d7c91c.159ed8",
+        "type": "delay",
+        "z": "91694a3b.755b08",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "30",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 320,
+        "y": 280,
+        "wires": [
+            [
+                "74f92754.7b17b8"
+            ]
+        ]
+    },
+    {
+        "id": "eb231eca.0dd89",
+        "type": "mqtt out",
+        "z": "91694a3b.755b08",
+        "name": "ThingSpeak",
+        "topic": "channels/1363188/publish/MBF28CP4PKNCQQ8B",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9bf06b37.2a9bd",
+        "x": 650,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "9bf06b37.2a9bd",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt.thingspeak.com",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]

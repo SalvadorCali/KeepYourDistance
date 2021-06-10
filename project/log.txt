@@ -1,0 +1,271 @@
+##### There are 2 motes that exchange messages and send an alarm #####
+
+00:05.947	ID:2	[DEBUG2] Current counter for node 1: 1
+00:06.290	ID:1	[DEBUG1] Current counter for node 2: 1
+00:06.435	ID:2	[DEBUG2] Current counter for node 1: 2
+00:06.784	ID:1	[DEBUG1] Current counter for node 2: 2
+00:06.929	ID:2	[DEBUG2] Current counter for node 1: 3
+00:07.267	ID:1	[DEBUG1] Current counter for node 2: 3
+00:07.420	ID:2	[DEBUG2] Current counter for node 1: 4
+00:07.758	ID:1	[DEBUG1] Current counter for node 2: 4
+00:07.904	ID:2	[DEBUG2] Current counter for node 1: 5
+00:08.249	ID:1	[DEBUG1] Current counter for node 2: 5
+00:08.392	ID:2	[DEBUG2] Current counter for node 1: 6
+00:08.731	ID:1	[DEBUG1] Current counter for node 2: 6
+00:08.877	ID:2	[DEBUG2] Current counter for node 1: 7
+00:09.224	ID:1	[DEBUG1] Current counter for node 2: 7
+00:09.365	ID:2	[DEBUG2] Current counter for node 1: 8
+00:09.712	ID:1	[DEBUG1] Current counter for node 2: 8
+00:09.858	ID:2	[DEBUG2] Current counter for node 1: 9
+00:10.199	ID:1	[DEBUG1] Current counter for node 2: 9
+00:10.344	ID:2	{"value1": 2, "value2": 1}
+00:10.689	ID:1	{"value1": 1, "value2": 2}
+
+##### Mote 1 moves away from 2, but returns in a time lesser than 3s (messages A and B); indeed the counter is not reset #####
+
+00:19.480	ID:1	[DEBUG1] Current counter for node 2: 1
+00:19.620	ID:2	[DEBUG2] Current counter for node 1: 1
+00:19.965	ID:1	[DEBUG1] Current counter for node 2: 2 (A)
+00:20.114	ID:2	[DEBUG2] Current counter for node 1: 2 (B)
+00:22.064	ID:2	[DEBUG2] Current counter for node 1: 3 (B)
+00:22.408	ID:1	[DEBUG1] Current counter for node 2: 3 (A)
+
+##### If the time between two messages is greater than 3s (messages A and B), the motes resets the counter #####
+
+00:19.480	ID:1	[DEBUG1] Current counter for node 2: 1
+00:19.620	ID:2	[DEBUG2] Current counter for node 1: 1
+00:19.965	ID:1	[DEBUG1] Current counter for node 2: 2
+00:20.114	ID:2	[DEBUG2] Current counter for node 1: 2
+00:22.064	ID:2	[DEBUG2] Current counter for node 1: 3
+00:22.408	ID:1	[DEBUG1] Current counter for node 2: 3
+00:22.549	ID:2	[DEBUG2] Current counter for node 1: 4 (B)
+00:22.893	ID:1	[DEBUG1] Current counter for node 2: 4 (A)
+00:26.312	ID:1	[DEBUG1] Current counter for node 2: 1 (A)
+00:26.461	ID:2	[DEBUG2] Current counter for node 1: 1 (B)
+
+##### The interval between messages received by mote 2 is < 3s (messages B), but the interval of messages received by mote 1 is > 3s (messages A); mote 1 resets its counter, but mote 2 doesn't #####
+
+00:38.518	ID:1	[DEBUG1] Current counter for node 2: 1
+00:38.665	ID:2	[DEBUG2] Current counter for node 1: 1
+00:39.011	ID:1	[DEBUG1] Current counter for node 2: 2
+00:39.158	ID:2	[DEBUG2] Current counter for node 1: 2
+00:39.492	ID:1	[DEBUG1] Current counter for node 2: 3 (A)
+00:39.643	ID:2	[DEBUG2] Current counter for node 1: 3 (B)
+00:42.570	ID:2	[DEBUG2] Current counter for node 1: 4 (B)
+00:42.918	ID:1	[DEBUG1] Current counter for node 2: 1 (A)
+00:43.061	ID:2	[DEBUG2] Current counter for node 1: 5
+00:43.404	ID:1	[DEBUG1] Current counter for node 2: 2
+
+##### Motes 1-2-3 exchange messages and motes 4-5 exchange messages #####
+
+00:47.945	ID:3	[DEBUG3] Current counter for node 1: 1
+00:47.973	ID:1	[DEBUG1] Current counter for node 3: 1
+00:48.427	ID:3	[DEBUG3] Current counter for node 1: 2
+00:48.459	ID:1	[DEBUG1] Current counter for node 3: 2
+00:48.770	ID:3	[DEBUG3] Current counter for node 2: 1
+00:48.770	ID:1	[DEBUG1] Current counter for node 2: 1
+00:48.919	ID:2	[DEBUG2] Current counter for node 1: 1
+00:48.919	ID:3	[DEBUG3] Current counter for node 1: 3
+00:48.945	ID:2	[DEBUG2] Current counter for node 3: 1
+00:48.945	ID:1	[DEBUG1] Current counter for node 3: 3
+00:49.265	ID:1	[DEBUG1] Current counter for node 2: 2
+00:49.265	ID:3	[DEBUG3] Current counter for node 2: 2
+00:49.410	ID:3	[DEBUG3] Current counter for node 1: 4
+00:49.410	ID:2	[DEBUG2] Current counter for node 1: 2
+00:49.436	ID:1	[DEBUG1] Current counter for node 3: 4
+00:49.436	ID:2	[DEBUG2] Current counter for node 3: 2
+00:49.754	ID:3	[DEBUG3] Current counter for node 2: 3
+00:49.754	ID:1	[DEBUG1] Current counter for node 2: 3
+00:49.897	ID:3	[DEBUG3] Current counter for node 1: 5
+00:49.897	ID:2	[DEBUG2] Current counter for node 1: 3
+00:49.925	ID:1	[DEBUG1] Current counter for node 3: 5
+00:49.925	ID:2	[DEBUG2] Current counter for node 3: 3
+00:50.232	ID:4	[DEBUG4] Current counter for node 5: 1
+00:50.237	ID:3	[DEBUG3] Current counter for node 2: 4
+00:50.237	ID:1	[DEBUG1] Current counter for node 2: 4
+00:50.350	ID:5	[DEBUG5] Current counter for node 4: 1
+00:50.384	ID:2	[DEBUG2] Current counter for node 1: 4
+00:50.384	ID:3	[DEBUG3] Current counter for node 1: 6
+00:50.411	ID:2	[DEBUG2] Current counter for node 3: 4
+00:50.411	ID:1	[DEBUG1] Current counter for node 3: 6
+00:50.716	ID:4	[DEBUG4] Current counter for node 5: 2
+00:50.726	ID:1	[DEBUG1] Current counter for node 2: 5
+00:50.726	ID:3	[DEBUG3] Current counter for node 2: 5
+00:50.838	ID:5	[DEBUG5] Current counter for node 4: 2
+00:50.872	ID:2	[DEBUG2] Current counter for node 1: 5
+00:50.872	ID:3	[DEBUG3] Current counter for node 1: 7
+00:50.901	ID:2	[DEBUG2] Current counter for node 3: 5
+00:50.901	ID:1	[DEBUG1] Current counter for node 3: 7
+00:51.204	ID:4	[DEBUG4] Current counter for node 5: 3
+00:51.215	ID:1	[DEBUG1] Current counter for node 2: 6
+00:51.215	ID:3	[DEBUG3] Current counter for node 2: 6
+00:51.330	ID:5	[DEBUG5] Current counter for node 4: 3
+00:51.360	ID:3	[DEBUG3] Current counter for node 1: 8
+00:51.360	ID:2	[DEBUG2] Current counter for node 1: 6
+00:51.394	ID:2	[DEBUG2] Current counter for node 3: 6
+00:51.394	ID:1	[DEBUG1] Current counter for node 3: 8
+00:51.699	ID:4	[DEBUG4] Current counter for node 5: 4
+00:51.706	ID:3	[DEBUG3] Current counter for node 2: 7
+00:51.706	ID:1	[DEBUG1] Current counter for node 2: 7
+00:51.813	ID:5	[DEBUG5] Current counter for node 4: 4
+00:51.849	ID:2	[DEBUG2] Current counter for node 1: 7
+00:51.849	ID:3	[DEBUG3] Current counter for node 1: 9
+00:51.880	ID:2	[DEBUG2] Current counter for node 3: 7
+00:51.880	ID:1	[DEBUG1] Current counter for node 3: 9
+00:52.182	ID:4	[DEBUG4] Current counter for node 5: 5
+00:52.189	ID:3	[DEBUG3] Current counter for node 2: 8
+00:52.189	ID:1	[DEBUG1] Current counter for node 2: 8
+00:52.307	ID:5	[DEBUG5] Current counter for node 4: 5
+00:52.330	ID:3	{"value1": 3, "value2": 1}
+00:52.333	ID:2	[DEBUG2] Current counter for node 1: 8
+00:52.359	ID:1	{"value1": 1, "value2": 3}
+00:52.362	ID:2	[DEBUG2] Current counter for node 3: 8
+00:52.666	ID:4	[DEBUG4] Current counter for node 5: 6
+00:52.675	ID:3	[DEBUG3] Current counter for node 2: 9
+00:52.675	ID:1	[DEBUG1] Current counter for node 2: 9
+
+##### All 5 motes exchange messages. They are all separated at the starting time and they are moved in different times. #####
+
+00:57.713	ID:2	[DEBUG2] Current counter for node 1: 1
+00:58.052	ID:1	[DEBUG1] Current counter for node 2: 1
+00:58.193	ID:2	[DEBUG2] Current counter for node 1: 2
+00:58.542	ID:1	[DEBUG1] Current counter for node 2: 2
+00:58.685	ID:2	[DEBUG2] Current counter for node 1: 3
+00:58.685	ID:3	[DEBUG3] Current counter for node 1: 1
+00:58.711	ID:1	[DEBUG1] Current counter for node 3: 1
+00:58.711	ID:2	[DEBUG2] Current counter for node 3: 1
+00:59.032	ID:1	[DEBUG1] Current counter for node 2: 3
+00:59.032	ID:3	[DEBUG3] Current counter for node 2: 1
+00:59.175	ID:2	[DEBUG2] Current counter for node 1: 4
+00:59.175	ID:3	[DEBUG3] Current counter for node 1: 2
+00:59.204	ID:2	[DEBUG2] Current counter for node 3: 2
+00:59.204	ID:1	[DEBUG1] Current counter for node 3: 2
+00:59.515	ID:3	[DEBUG3] Current counter for node 2: 2
+00:59.515	ID:1	[DEBUG1] Current counter for node 2: 4
+00:59.665	ID:3	[DEBUG3] Current counter for node 1: 3
+00:59.665	ID:4	[DEBUG4] Current counter for node 1: 1
+00:59.665	ID:2	[DEBUG2] Current counter for node 1: 5
+00:59.689	ID:2	[DEBUG2] Current counter for node 3: 3
+00:59.689	ID:4	[DEBUG4] Current counter for node 3: 1
+00:59.689	ID:1	[DEBUG1] Current counter for node 3: 3
+01:00.001	ID:1	[DEBUG1] Current counter for node 2: 5
+01:00.001	ID:4	[DEBUG4] Current counter for node 2: 1
+01:00.001	ID:3	[DEBUG3] Current counter for node 2: 3
+01:00.118	ID:3	[DEBUG3] Current counter for node 4: 1
+01:00.118	ID:1	[DEBUG1] Current counter for node 4: 1
+01:00.118	ID:2	[DEBUG2] Current counter for node 4: 1
+01:00.151	ID:2	[DEBUG2] Current counter for node 1: 6
+01:00.151	ID:3	[DEBUG3] Current counter for node 1: 4
+01:00.151	ID:4	[DEBUG4] Current counter for node 1: 2
+01:00.180	ID:4	[DEBUG4] Current counter for node 3: 2
+01:00.180	ID:1	[DEBUG1] Current counter for node 3: 4
+01:00.180	ID:2	[DEBUG2] Current counter for node 3: 4
+01:00.488	ID:1	[DEBUG1] Current counter for node 2: 6
+01:00.488	ID:3	[DEBUG3] Current counter for node 2: 4
+01:00.488	ID:4	[DEBUG4] Current counter for node 2: 2
+01:00.601	ID:3	[DEBUG3] Current counter for node 4: 2
+01:00.601	ID:1	[DEBUG1] Current counter for node 4: 2
+01:00.601	ID:2	[DEBUG2] Current counter for node 4: 2
+01:00.634	ID:3	[DEBUG3] Current counter for node 1: 5
+01:00.634	ID:2	[DEBUG2] Current counter for node 1: 7
+01:00.634	ID:4	[DEBUG4] Current counter for node 1: 3
+01:00.664	ID:2	[DEBUG2] Current counter for node 3: 5
+01:00.664	ID:4	[DEBUG4] Current counter for node 3: 3
+01:00.664	ID:1	[DEBUG1] Current counter for node 3: 5
+01:00.968	ID:4	[DEBUG4] Current counter for node 5: 1
+01:00.968	ID:3	[DEBUG3] Current counter for node 5: 1
+01:00.969	ID:2	[DEBUG2] Current counter for node 5: 1
+01:00.979	ID:5	[DEBUG5] Current counter for node 2: 1
+01:00.979	ID:1	[DEBUG1] Current counter for node 2: 7
+01:00.979	ID:3	[DEBUG3] Current counter for node 2: 5
+01:00.979	ID:4	[DEBUG4] Current counter for node 2: 3
+01:01.096	ID:1	[DEBUG1] Current counter for node 4: 3
+01:01.096	ID:3	[DEBUG3] Current counter for node 4: 3
+01:01.096	ID:5	[DEBUG5] Current counter for node 4: 1
+01:01.096	ID:2	[DEBUG2] Current counter for node 4: 3
+01:01.131	ID:3	[DEBUG3] Current counter for node 1: 6
+01:01.131	ID:2	[DEBUG2] Current counter for node 1: 8
+01:01.131	ID:4	[DEBUG4] Current counter for node 1: 4
+01:01.152	ID:2	[DEBUG2] Current counter for node 3: 6
+01:01.152	ID:1	[DEBUG1] Current counter for node 3: 6
+01:01.152	ID:5	[DEBUG5] Current counter for node 3: 1
+01:01.152	ID:4	[DEBUG4] Current counter for node 3: 4
+01:01.456	ID:3	[DEBUG3] Current counter for node 5: 2
+01:01.456	ID:4	[DEBUG4] Current counter for node 5: 2
+01:01.457	ID:2	[DEBUG2] Current counter for node 5: 2
+01:01.468	ID:1	[DEBUG1] Current counter for node 2: 8
+01:01.468	ID:4	[DEBUG4] Current counter for node 2: 4
+01:01.468	ID:5	[DEBUG5] Current counter for node 2: 2
+01:01.468	ID:3	[DEBUG3] Current counter for node 2: 6
+01:01.583	ID:5	[DEBUG5] Current counter for node 4: 2
+01:01.583	ID:3	[DEBUG3] Current counter for node 4: 4
+01:01.583	ID:1	[DEBUG1] Current counter for node 4: 4
+01:01.583	ID:2	[DEBUG2] Current counter for node 4: 4
+01:01.618	ID:2	[DEBUG2] Current counter for node 1: 9
+01:01.618	ID:3	[DEBUG3] Current counter for node 1: 7
+01:01.618	ID:4	[DEBUG4] Current counter for node 1: 5
+01:01.644	ID:1	[DEBUG1] Current counter for node 3: 7
+01:01.644	ID:5	[DEBUG5] Current counter for node 3: 2
+01:01.644	ID:4	[DEBUG4] Current counter for node 3: 5
+01:01.644	ID:2	[DEBUG2] Current counter for node 3: 7
+01:01.945	ID:4	[DEBUG4] Current counter for node 5: 3
+01:01.945	ID:3	[DEBUG3] Current counter for node 5: 3
+01:01.946	ID:2	[DEBUG2] Current counter for node 5: 3
+01:01.961	ID:5	[DEBUG5] Current counter for node 2: 3
+01:01.961	ID:1	[DEBUG1] Current counter for node 2: 9
+01:01.961	ID:4	[DEBUG4] Current counter for node 2: 5
+01:01.961	ID:3	[DEBUG3] Current counter for node 2: 7
+01:02.065	ID:1	[DEBUG1] Current counter for node 4: 5
+01:02.065	ID:3	[DEBUG3] Current counter for node 4: 5
+01:02.065	ID:5	[DEBUG5] Current counter for node 4: 3
+01:02.065	ID:2	[DEBUG2] Current counter for node 4: 5
+01:02.102	ID:2	{"value1": 2, "value2": 1}
+01:02.105	ID:4	[DEBUG4] Current counter for node 1: 6
+01:02.106	ID:3	[DEBUG3] Current counter for node 1: 8
+01:02.130	ID:5	[DEBUG5] Current counter for node 3: 3
+01:02.130	ID:1	[DEBUG1] Current counter for node 3: 8
+01:02.130	ID:2	[DEBUG2] Current counter for node 3: 8
+01:02.130	ID:4	[DEBUG4] Current counter for node 3: 6
+01:02.435	ID:3	[DEBUG3] Current counter for node 5: 4
+01:02.435	ID:4	[DEBUG4] Current counter for node 5: 4
+01:02.437	ID:2	[DEBUG2] Current counter for node 5: 4
+01:02.442	ID:1	{"value1": 1, "value2": 2}
+01:02.445	ID:5	[DEBUG5] Current counter for node 2: 4
+01:02.446	ID:3	[DEBUG3] Current counter for node 2: 8
+01:02.446	ID:4	[DEBUG4] Current counter for node 2: 6
+01:02.554	ID:5	[DEBUG5] Current counter for node 4: 4
+01:02.554	ID:2	[DEBUG2] Current counter for node 4: 6
+01:02.554	ID:1	[DEBUG1] Current counter for node 4: 6
+01:02.554	ID:3	[DEBUG3] Current counter for node 4: 6
+01:02.588	ID:2	[DEBUG2] Current counter for node 1: 1
+01:02.588	ID:3	[DEBUG3] Current counter for node 1: 9
+01:02.588	ID:4	[DEBUG4] Current counter for node 1: 7
+01:02.616	ID:5	[DEBUG5] Current counter for node 3: 4
+01:02.616	ID:1	[DEBUG1] Current counter for node 3: 9
+01:02.616	ID:2	[DEBUG2] Current counter for node 3: 9
+01:02.616	ID:4	[DEBUG4] Current counter for node 3: 7
+01:02.925	ID:1	[DEBUG1] Current counter for node 5: 1
+01:02.925	ID:3	[DEBUG3] Current counter for node 5: 5
+01:02.925	ID:4	[DEBUG4] Current counter for node 5: 5
+01:02.926	ID:2	[DEBUG2] Current counter for node 5: 5
+01:02.932	ID:5	[DEBUG5] Current counter for node 2: 5
+01:02.935	ID:1	[DEBUG1] Current counter for node 2: 1
+01:02.935	ID:3	[DEBUG3] Current counter for node 2: 9
+01:02.935	ID:4	[DEBUG4] Current counter for node 2: 7
+01:03.049	ID:5	[DEBUG5] Current counter for node 4: 5
+01:03.049	ID:1	[DEBUG1] Current counter for node 4: 7
+01:03.049	ID:3	[DEBUG3] Current counter for node 4: 7
+01:03.049	ID:2	[DEBUG2] Current counter for node 4: 7
+01:03.081	ID:3	{"value1": 3, "value2": 1}
+01:03.084	ID:5	[DEBUG5] Current counter for node 1: 1
+01:03.084	ID:4	[DEBUG4] Current counter for node 1: 8
+01:03.084	ID:2	[DEBUG2] Current counter for node 1: 2
+01:03.103	ID:1	{"value1": 1, "value2": 3}
+01:03.103	ID:2	{"value1": 2, "value2": 3}
+01:03.107	ID:4	[DEBUG4] Current counter for node 3: 8
+01:03.107	ID:5	[DEBUG5] Current counter for node 3: 5
+01:03.409	ID:1	[DEBUG1] Current counter for node 5: 2
+01:03.409	ID:3	[DEBUG3] Current counter for node 5: 6
+01:03.409	ID:4	[DEBUG4] Current counter for node 5: 6
+01:03.410	ID:2	[DEBUG2] Current counter for node 5: 6
+01:03.424	ID:3	{"value1": 3, "value2": 2}
